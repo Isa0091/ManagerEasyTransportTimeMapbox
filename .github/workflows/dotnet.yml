@@ -1,0 +1,41 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    
+    - name: Despliegue en nuget de ManagerEasyTransportTimeMapbox
+      id: publish_nuget_ManagerEasyTransportTimeMapbox
+      uses: rohith/publish-nuget@v2
+      with:
+          # Filepath of the project to be packaged, relative to root of repository
+          PROJECT_FILE_PATH:  ManagerEasyTransportTimeMapbox/ManagerEasyTransportTimeMapbox.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+     
+    - name: Despliegue en nuget de la inyeccion de dependencias del ManagerEasyTransportTimeMapbox
+      id: publish_nuget_injectionManagerEasyTransportTimeMapbox
+      uses: rohith/publish-nuget@v2
+      with:
+          # Filepath of the project to be packaged, relative to root of repository
+          PROJECT_FILE_PATH: ManagerEasyTransportTimeMapbox.Injection/ManagerEasyTransportTimeMapbox.Injection.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
