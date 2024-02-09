@@ -67,8 +67,8 @@ namespace ManagerEasyTransportTimeMapbox
                          DestinationLocation= transportTimeInputDto.DestinationLocation,
                          OriginLocation= transportTimeInputDto.OriginLocation,
                          TransportType= transportTimeInputDto.TransportType,
-                         DistanceInMeters = response.Destinations.First().Distance,
-                         TravelTime= TimeSpan.FromSeconds(response.Durations.First().First())
+                         DistanceInMeters = response.Destinations.Last().Distance,
+                         TravelTime= TimeSpan.FromSeconds(response.Durations.First().Last())
                     };
 
                     return transportTimeOutputDto;
