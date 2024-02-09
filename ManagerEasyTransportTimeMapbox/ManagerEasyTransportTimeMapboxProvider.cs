@@ -33,14 +33,15 @@ namespace ManagerEasyTransportTimeMapbox
             {
                 case TransportType.Walking: { travelMode = "walking"; break; }
                 case TransportType.Driving: { travelMode = "driving"; break; }
+                case TransportType.DrivingWithTraffic: { travelMode = "driving-traffic"; break; }
+                case TransportType.Cycling: { travelMode = "cycling"; break; }
             }
 
             NameValueCollection nv = new NameValueCollection
             {
                 ["approaches"] = "curb;curb",
                 ["access_token"] = _MapboxToken,
-                ["sources"] = "0",
-                ["destinations"] = "1"
+                ["sources"] = "0"
             };
 
             Uri urlMapboxMatrix = new Uri("https://api.mapbox.com/directions-matrix/v1/mapbox/" + travelMode + "/"
@@ -73,7 +74,7 @@ namespace ManagerEasyTransportTimeMapbox
                     return transportTimeOutputDto;
                 }
                 else
-                    throw new ArgumentException("Error al procesar los datos de Api Mapbox distance Matrix  code " + response.Code.ToString());
+                    throw new ArgumentException("Error al procesar los datos de Api Mapbox distance Matrix  code " + response.Code.ToString() + " Data compelta :" + JsonConvert.SerializeObject(response));
             }
             else
                 throw new ArgumentException(" Ocurrio un error al consultar Api Mapbox distance Matrix response code "+ resp.StatusCode.ToString() );

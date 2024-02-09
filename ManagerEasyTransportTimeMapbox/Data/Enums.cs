@@ -21,5 +21,14 @@ namespace ManagerEasyTransportTimeMapbox.Data
         /// </summary>
         Walking = 1,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        DrivingWithTraffic = 2,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Cycling = 3
     }
 }
