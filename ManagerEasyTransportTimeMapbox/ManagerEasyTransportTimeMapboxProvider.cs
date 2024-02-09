@@ -41,7 +41,8 @@ namespace ManagerEasyTransportTimeMapbox
             {
                 ["approaches"] = "curb;curb",
                 ["access_token"] = _MapboxToken,
-                ["sources"] = "0"
+                ["sources"] = "0",
+                ["annotations"] = "distance,duration"
             };
 
             Uri urlMapboxMatrix = new Uri("https://api.mapbox.com/directions-matrix/v1/mapbox/" + travelMode + "/"
@@ -67,7 +68,7 @@ namespace ManagerEasyTransportTimeMapbox
                          DestinationLocation= transportTimeInputDto.DestinationLocation,
                          OriginLocation= transportTimeInputDto.OriginLocation,
                          TransportType= transportTimeInputDto.TransportType,
-                         DistanceInMeters = response.Destinations.Last().Distance,
+                         DistanceInMeters = response.Distances.First().Last(),
                          TravelTime= TimeSpan.FromSeconds(response.Durations.First().Last())
                     };
 
@@ -119,10 +120,16 @@ namespace ManagerEasyTransportTimeMapbox
 
         [JsonProperty("durations")]
         public List<List<double>> Durations { get; set; }
+
         [JsonProperty("destinations")]
         public List<DatosUbicacion> Destinations { get; set; }
+
         [JsonProperty("sources")]
         public List<DatosUbicacion> Sources { get; set; }
+
+        [JsonProperty("distances")]
+        public List<List<double>> Distances { get; set; }
+
     }
 
     #endregion
